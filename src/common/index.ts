@@ -80,7 +80,7 @@ export const Keys = {
 
 export const Cameras: Camera[] = [
   new Camera([434.2 - 0.7, -978.11 - 0.1, 32.11 + 1.1], 90, 16, 180), // MRPD 1
-  // new Camera([424.93, -996.49, 33.76], 90, 56, 125), // MRPD 2
-  // new Camera([317.51 - 0.1, -280.55 + 0.1, 55.5], 43, -9, 56), // Fleeca Hawick 1
+  new Camera([424.93, -996.49, 33.76], 90, 56, 125), // MRPD 2
+  new Camera([317.51 - 0.1, -280.55 + 0.1, 55.5], 43, -9, 56), // Fleeca Hawick 1
   // new Camera([-353.08, -41.02, 52.37], -153, 80, 100), // Fleeca 2
 ];

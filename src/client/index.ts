@@ -7,9 +7,9 @@ let currentCameraIndex: number = 0;
 let scaleformTick: number = 0;
 
 const CameraTransitionDuration: number = 250;
-const CameraRotateSpeed: number = 0.5;
+const CameraRotateSpeed: number = 0.1;
 const EnableRotateClamp: boolean = true;
-const RotationEnabled: boolean = false;
+const RotationEnabled: boolean = true;
 
 setTick(() => {
   InvalidateIdleCam();
@@ -18,8 +18,8 @@ setTick(() => {
 on("onClientResourceStart", (name: string) => {
   if (name != GetCurrentResourceName()) return;
 
-  stopUsingCamera();
-  // useCamera(0);
+  // stopUsingCamera();
+  useCamera(0);
 });
 
 on("onClientResourceStopped", (name: string) => {
@@ -166,17 +166,17 @@ async function renderScaleform(): Promise<void> {
     DrawScaleformMovieFullscreen(handle, 255, 255, 255, 255, 0);
     DrawScaleformMovieFullscreen(instructions, 255, 255, 255, 255, 0);
 
-    DisableControlAction(0, Keys.BACKSPACE, true);
+    DisableControlAction(0, Keys.X, true);
     DisableControlAction(0, Keys.LEFT, true);
     DisableControlAction(0, Keys.RIGHT, true);
     DisableControlAction(0, Keys.Q, true);
     DisableControlAction(0, Keys.E, true);
 
-    if (IsDisabledControlJustPressed(0, Keys.BACKSPACE)) {
+    if (IsDisabledControlJustPressed(0, Keys.X)) {
       stopUsingCamera();
-    } else if (IsDisabledControlJustPressed(0, Keys.LEFT)) {
-      useNextCamera();
     } else if (IsDisabledControlJustPressed(0, Keys.RIGHT)) {
+      useNextCamera();
+    } else if (IsDisabledControlJustPressed(0, Keys.LEFT)) {
       usePreviousCamera();
     } else if (RotationEnabled && IsDisabledControlPressed(0, Keys.Q)) {
       rotateCamera(cam, CameraRotateSpeed);
@@ -198,7 +198,7 @@ function rotateCamera(cam: number, speed: number): void {
       : zRot,
     2
   );
-  console.log(Math.ceil(zRot));
+  // console.log(Math.ceil(zRot));
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -226,13 +226,13 @@ async function createInstuctionScaleform(): Promise<number> {
   [
     {
       enabled: true,
-      label: "Next",
-      key: Keys.RIGHT,
+      label: "Previous",
+      key: Keys.LEFT,
     },
     {
       enabled: true,
-      label: "Previous",
-      key: Keys.LEFT,
+      label: "Next",
+      key: Keys.RIGHT,
     },
     {
       enabled: RotationEnabled,
@@ -247,7 +247,7 @@ async function createInstuctionScaleform(): Promise<number> {
     {
       enabled: true,
       label: "Close",
-      key: Keys.BACKSPACE,
+      key: Keys.X,
     },
   ]
     .reverse()
